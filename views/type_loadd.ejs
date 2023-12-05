@@ -1,0 +1,43 @@
+<%- include("_header"); -%>
+<br>
+<br>
+<style>
+    body {
+       background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+       background-size: cover;
+   }
+
+   .city {
+       background-color: rgba(255, 255, 255, 0.8);
+       color: #000;
+       border: 2px solid #fff;
+       margin: 20px;
+       padding: 20px;
+       border-radius: 15px; /* เพิ่มกรอบรอบรายละเอียด */
+   }
+</style>
+<body>
+   <div class="city">
+<h1 align="center">เพิ่มประเภทของสถานที่</h1>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12 d-flex justify-content-center">
+            <form action="/type_lo/add" enctype="multipart/form-data" method="post" class="w-50">
+                <!-- แถวที่ 1 -->
+
+                <div class="form-group">
+                    <label for="typename">ประเภทของสถานที่</label>
+                    <input type="text" Name="typename" placeholder="ประเภทของสถานที่" class="form-control">
+                </div>
+
+            
+                <br>
+                <button type="submit" class="btn btn-primary">บันทึก</button>
+                <a href="/type_lo/list" class="btn btn-primary">ย้อนกลับ</a>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<%- include("_footer"); -%>

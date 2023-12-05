@@ -1,0 +1,108 @@
+<%- include("_header"); -%>
+<br>
+<br>
+<br>
+<style>
+  body {
+    background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+  
+}
+
+.city {
+    background-color: rgba(255, 255, 255, 0.8); /* เพิ่มความเป็นโปร่งใส */
+    color: #000; /* สีข้อความ */
+    border: 2px solid rgba(255, 255, 255, 0.5); /* ขอบเส้นโปร่งใส */
+    padding: 20px;
+    border-radius: 15px; /* เพิ่มเส้นขอบโค้ง */
+}
+
+    #รายละเอียด {
+  background-color: rgb(123, 197, 222);
+  color: black;
+  padding: 30px;
+  text-align: center;
+
+} 
+h3 {
+    background-color: rgb(123, 197, 222);
+    color: black;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.row {
+    margin-top: 15px;
+}
+
+.btn-equal-size {
+    width: 100px; /* ปรับขนาดตามที่คุณต้องการ */
+}
+
+    
+    </style>
+    <div class="city">
+<h3  align="center"> ประเภทสถานที่ </h3>
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-9">
+            <h4> <i class="bi bi-card-list"></i> รายการ</h4>
+        </div>
+        <div class="col-md-3 d-flex justify-content-end">
+            <a href="/type_lo/add" class="btn btn-primary"> <i class="bi bi-bag-plus"></i> เพิ่มประเภทของสถานที่</a>
+        </div>
+    </div>
+    
+    
+        <!-- <div class="row mt-3">
+            <div class="col-md-9"> -->
+                
+            </div>
+    <div class="row mt-5">
+        <div class="col-md-9">
+            <div>
+                <br>
+                <br>
+            </div>
+        </div>
+        <!-- <div class="col-md-15"> -->
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        
+                        <th>ลำดับ</th>
+                        <th>ประเภทของสถานที่</th>
+                        <th>เพิ่มเติม</th>
+                    </tr>
+                </thead>
+                <% if (data) { %>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                        <tr>
+                            <td><%= (i + 1) %></td>
+                            <td>  <%= data[i].typename %>  </td>
+                            
+                            <td>  
+                                <a href="/edittype_lo/<%= data[i].id %>" class="btn btn-info btn-equal-size">
+                                    <i class="bi bi-pen-fill"></i> แก้ไข
+                                  </a>
+                                  <a href="/deletetype_lo/<%= data[i].id %>" class="btn btn-danger btn-equal-size">
+                                    <i class="bi bi-trash3-fill"></i> ลบ
+                                  </a>
+                                  
+                                
+
+                            </td> 
+                               
+                            
+                                
+                           
+                        </tr>
+                    <% } %>
+                <% } %> 
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- <%=JSON.stringify(data) %> -->
+<%- include("_footer"); -%>

@@ -1,0 +1,85 @@
+<%- include("_header"); -%>
+<br>
+<br>
+
+<style>
+    body {
+        background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+        background-size: cover;
+        
+    }
+
+    .city {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+        border: 2px solid #fff;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    h3 {
+        background-color: rgb(255, 255, 255);
+    }
+
+    /* เพิ่ม Flexbox เพื่อจัดเนื้อหาอยู่ตรงกลางแนวตั้ง */
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* เพิ่ม Flexbox เพื่อจัดปุ่ม "ย้อนกลับ" อยู่ตรงกลาง */
+    .back-button {
+        display: flex;
+        justify-content: center;
+    }
+    p {
+    font-size: 18px;
+}
+
+/* ปรับระยะห่างของบรรทัด */
+p {
+    line-height: 1.6;
+}
+a.btn:hover {
+    background-color: #b37700;
+    color: #fff;
+    transition: background-color 0.3s;}
+
+    .content {
+    margin-top: 2cm;
+}
+
+
+
+</style>
+
+<div class="city">
+    <div class="content">
+        <h3> เงื่อนไขการใช้ห้องประชุม</h3>
+        <p> 1.ผู้ประสงค์จะอนุญาตใช้ห้องประชุม แบบฟอร์มการขอใช้ห้อง </p>
+        <p>2. ส่งแบบฟอร์มการขอใช้กับงานการเจ้าหน้าที่ อย่างน้อยก่อนวันใช้ห้องประชุม 5 วัน</p>
+        <p>เพื่อเจ้าหน้าที่ ที่ดูแลห้องประชุมจะได้ ประสานงานไปยังผู้เกี่ยวข้องในการจัดสถานที่</p>
+        <p>3. หากมีการเปลี่ยนแปลงต่างๆ ในการจัดงาน กรุณาแจ้งล่วงหน้าอย่างน้อย 3 วัน</p>
+        <p> 4. การประสานจองห้องทางโทรศัพท์ ติดต่อเบอร์ 053-795321 ต่อ 12 หรือ</p>
+        <p> นางลักขณา บุญช่วยเหลือ เบอร์ 085-6940416</p>
+    </div>
+
+    <div class="content">
+        <h3 > <i class="bi bi-exclamation-diamond-fill"></i> ข้อควรปฏิบัติ หรับการใช้ห้องประชุม <i class="bi bi-exclamation-diamond-fill"></i></h3>
+        <p>2.ช่วยกันรักษาความสะอาด โดยการทิ้งเศษขยะลงในถังขยะที่ได้จัดเตรียมไว้</p>
+        <p>3.เมื่อเลิกใช้ห้องประชุมแล้วให้ปิดอุปกรณ์และระบบไฟฟ้าทุกชนิด</p>
+        <p>4.หลังการใช้ห้องประชุมในครั้ง และฟ ให้อยู่ในสภาพพร้อมใช้งานตามรูปแบบทันที</p>
+        <p>5.หากมีการจุดธูปเทียนบูชาพระ ต้องดูแลและระมัดระวังไฟ รวมถึงต้องไม่ลืมดับธูปเทียนด้วย</p>
+        <p>6.เมื่อเลิกใช้ห้องประชุมแล้ว ต้องจัดเก็บ วัสดุ อุปกรณ์ที่ใช้ ให้เรียบร้อย</p>
+    </div>
+
+    <!-- ปุ่ม "ย้อนกลับ" ที่อยู่ใน Flexbox ตรงกลาง -->
+    <div class="back-button">
+        <a href="/location_rs/list" class="btn btn-danger">ย้อนกลับ</a>
+    </div>
+</div>
+
+<%- include("_footer"); -%>

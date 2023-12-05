@@ -1,0 +1,168 @@
+<%- include("_header"); -%>
+<br>
+<br>
+
+<style>
+    body {
+       background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+       background-size: cover;
+   }
+
+    .city {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+        border: 2px solid #fff;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 15px; /* เพิ่มกรอบรอบรายละเอียด */
+    }
+
+    #รายละเอียด {
+        background-color: rgb(123, 197, 222);
+        color: black;
+        padding: 30px;
+        text-align: center;
+    }
+
+    h3 {
+        background-color: rgb(123, 197, 222);
+    }
+
+    .search-form {
+        margin-left: 25cm;
+        margin-top: 2mm;
+    }
+
+    .search-label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-input {
+        border: 2px solid #007BFF;
+        border-radius: 20px;
+        padding: 5px 10px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .search-button {
+        background-color: #007BFF;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+
+    .search-button i {
+        font-size: 20px;
+    }
+
+    .search-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="city">
+    <h3 align="center">รายละเอียด</h3>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-9">
+                <h4> <i class="bi bi-journal-text"></i> รายการห้องประชุม/ลานกิจกรรม</h4>
+            </div>
+            <div class="col-md-3 d-flex justify-content-end">
+                <a href="/location_rs/add" class="btn btn-primary"> <i class="bi bi-geo-alt-fill"></i> เพิ่มสถานที่</a>
+            </div>
+        </div>
+
+        <% if (data) { %>
+        <h6>จำนวนห้องประชุมและลานกิจกรรมทั้งหมด <%= data.length %> แห่ง</h6>
+        <% } else { %>
+        <a>จำนวนห้องประชุมทั้งหมด 0 ห้อง</a>
+        <% } %>
+
+        <div style="margin-top: 0.5cm;">
+        <% if (data1) { %>
+            <a>จำนวนห้องประชุม/ลานกิจกรรม:</a>
+            <ul>
+                <% for (var i = 0; i < data1.length; i++) { %>
+                    <li><%= data1[i].typename %>: <%= typeNameCounts[data1[i].id] || 0 %> แห่ง</li>
+                <% } %>
+            </ul>
+        <% } %>
+    </div>
+
+        <div class="search-form">
+            <form action="/location_rs/list" method="get">
+                <label for="search" class="search-label"></label>
+                <div class="search-container">
+                    <input type="text" name="search" id="search" placeholder="แสดงทั้งหมด" class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-9">
+                <div>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            
+            <table class="table table-bordered table-hover">
+                <% if (data) { %>
+                <% for (var i = 0; i < data.length; i++) { %>
+                <tr class="roomRow">
+                    <td> <img src="/name/<%= data[i].img_lo %>" alt="" width="150px"></td>
+                    <td> ชื่อ: <%= data[i].name %> <br> สถานที่: <%= data[i].location %>
+                    </td>
+                    <td>
+                        <a href="/editlocation_rs/<%= data[i].id %>" class="btn btn-info style=width: 80px;"> <i class="bi bi-pen-fill"></i> แก้ไข</a>
+                        <a href="/deletelocation_rs/<%= data[i].id %>" class="btn btn-danger"> <i class="bi bi-trash3-fill"></i> ลบข้อมูล</a>
+                    </td>
+                    <td>
+                        <a href="/reserve/add" class="btn btn-warning" fdprocessedid="znn99"> <i class="bi bi-cart4"></i> จองสถานที่</a>
+                        <a href="/condition" class="btn btn-primary"> <i class="bi bi-book-fill"></i> รายละเอียด</a>
+                    </td>
+                </tr>
+                <% } %>
+                <% } %>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript เพื่อแสดงรูปภาพปัจจุบันเมื่อไม่มีการเลือกรูปใหม่
+    function showCurrentImage() {
+        const fileInput = document.querySelector('input[type="file"]');
+        const currentImage = document.getElementById('blah');
+        fileInput.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                currentImage.src = window.URL.createObjectURL(this.files[0]);
+            } else {
+                currentImage.src = '/name/<%= data.img_lo %>';
+            }
+        });
+    }
+
+    // เรียกฟังก์ชันเมื่อโหลดหน้าเว็บ
+    window.addEventListener('load', showCurrentImage);
+</script>
+
+<%- include("_footer"); -%>

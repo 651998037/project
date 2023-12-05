@@ -1,0 +1,359 @@
+<%- include("_header"); -%>
+    <br>
+    <br>
+    <style>
+        body {
+            background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+            background-size: cover;
+
+        }
+
+        .city {
+            background-color: rgb(255, 255, 254);
+            color: rgb(0, 0, 0);
+            border: 2px solid rgb(255, 255, 255);
+            margin: 20px;
+            padding: 20px;
+        }
+
+        #รายละเอียด {
+            background-color: rgb(123, 197, 222);
+            color: black;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h3 {
+            background-color: rgb(123, 197, 222);
+        }
+
+        .btn-equal-size {
+        width: 100px; /* ปรับขนาดตามที่คุณต้องการ */
+    }
+
+
+    .form-group {
+        margin-left: 20cm;
+        margin-top: 2mm;
+    }
+
+    .search-label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-select {
+        border: 2px solid #4e5761;
+        border-radius: 20px;
+        padding: 5px 10px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .search-button {
+        background-color: #007BFF;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+
+    .search-button i {
+        font-size: 20px;
+    }
+
+    .search-button:hover {
+        background-color: #0056b3;
+    }
+
+
+    .search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-form label {
+    margin-right: 10px;
+}
+
+.search-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button i {
+    font-size: 20px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    border: 2px solid #4e5761;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: border 0.3s, background-color 0.3s; /* เพิ่มการเปลี่ยนสีให้มีความนุ่ม */
+}
+
+.search-input:hover {
+    border: 2px solid #007BFF; /* สีเมื่อมีการชี้เม้าส์ */
+}
+
+.search-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button i {
+    font-size: 20px;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+    </style>
+
+    <script>
+        document.getElementById('selectRoomname').addEventListener('change', function () {
+            var selectedRoomname = this.value;
+            var table = document.querySelector('.table tbody');
+
+            if (selectedRoomname !== "กรุณาเลือก") {
+                Array.from(table.children).forEach(function (row) {
+                    var roomNameCell = row.cells[0];
+                    if (roomNameCell.textContent.trim() === selectedRoomname) {
+                        row.style.display = 'table-row';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            } else {
+                // ถ้ายกเลิกการเลือกห้อง ให้แสดงรายการทั้งหมด
+                Array.from(table.children).forEach(function (row) {
+                    row.style.display = 'table-row';
+                });
+            }
+        });
+    </script>
+
+    
+
+
+    <div class="city">
+        <h1 align="center"> <i class="bi bi-book"></i> รายการการจองห้องประชุม</h1>
+
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <form action="/reserve/list" method="get">
+                       
+                    </form>
+
+
+
+                    <form>
+                        <div class="search-form">
+                            <label for="startDate">ตั้งแต่วันที่:</label>
+                            <input type="date" name="startDate" id="startDate" class="search-input">
+                            <label for="startTime">เวลาเริ่มต้น:</label>
+                            <input type="time" name="startTime" id="startTime" class="search-input">
+                            <label for="endDate">ถึงวันที่:</label>
+                            <input type="date" name="endDate" id="endDate" class="search-input">
+                            <label for="endTime">เวลาสิ้นสุด:</label>
+                            <input type="time" name="endTime" id="endTime" class="search-input">
+                            <button type="submit" class="search-button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+    
+                        <div class="form-group">
+                            <div class="search-container" style="margin-left: -20cm;">
+                                <label for="selectRoomname" class="search-label">ค้นหาห้องที่ต้องการ:</label>
+                                <select id="selectRoomname" name="roomname" class="search-select">
+                                    <option value="">ทั้งหมด</option>
+                                    <!-- วนลูปผ่านรายชื่อห้องที่มาจากข้อมูล location_rs -->
+                                    <% data1.forEach(function(location) { %>
+                                        <option value="<%= location.id %>">
+                                            <%= location.name %>
+                                        </option>
+                                    <% }); %>
+                                </select>
+                                <button type="submit" class="search-button">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        
+
+                    </form>
+                
+                </div>
+            </div>
+            <form>
+                
+
+            </form>
+
+
+
+
+
+
+
+            <!-- <div style="margin-left: 25cm; margin-top: 2mm;">
+                    <form action="/reserve/list" method="get">
+                        <label for="search">ค้นหา:</label>
+                        <input type="text" name="search" id="search" placeholder="ค้นหา">
+                        <button type="submit" class="btn btn-primary">ค้นหา</button>
+                    </form>
+                </div> -->
+
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <table id="dataTables" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">ชื่อห้อง</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">ชื่อผู้จอง</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">วันเวลาเริ่ม</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">วันเวลาที่สิ้นสุด</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">สร้างเมื่อ</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">อุปกรณ์ที่ขอยืม</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">สถานะ</th>
+                                <th style="background-color: rgb(10, 77, 184); color: white;">เพิ่มเติม</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach(function(item) { %>
+                                <tr>
+                                    <td>
+                                        <%= item.roomname %>
+                                    </td>
+                                    <td>
+                                        <%= item.name %>
+                                    </td>
+                                    <td>
+                                        <%= (new Date(item.startdatetime)).toLocaleString('th-TH') %>
+                                    </td>
+                                    <td>
+                                        <%= (new Date(item.enddatetime)).toLocaleString('th-TH') %>
+                                    </td>
+                                    <td>
+                                        <%= (new Date(item.created_at)).toLocaleString('th-TH') %>
+                                    </td>
+                                    <td>
+                                        <% if (!item.equipment) { %>
+                                            ไม่มี
+                                        <% } else { %>
+                                            <ul>
+                                                <% if (Array.isArray(item.equipment)) { %>
+                                                    <% item.equipment.forEach(function(equipment) { %>
+                                                        <li><%= equipment.name %></li>
+                                                    <% }); %>
+                                                <% } else { %>
+                                                    <li><%= item.equipment %></li>
+                                                <% } %>
+                                            </ul>
+                                        <% } %>
+                                    </td>
+                                    
+                                    <td>
+                                        <a href="/approve/list/<%= item.id %>" class="btn btn-success btn-equal-size">อนุมัติหรือไม่</a>
+
+                                        
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a href="/editreserve/<%= item.id %>" class="btn btn-info">
+                                                <i class="bi bi-pen-fill"></i> แก้ไข
+                                            </a>
+                                            <a href="/deletereserve/<%= item.id %>" class="btn btn-danger">
+                                                <i class="bi bi-trash3-fill"></i> ลบ
+                                            </a>
+                                        </div>
+                                    </td>
+                                    
+                                    
+                                    
+                                </tr>
+                                <% }); %>
+                        </tbody>
+
+                    </table>
+
+                    <a href="/location_rs/list" class="btn btn-primary">ย้อนกลับ</a>
+                    <a href="/reserve/add" class="btn btn-primary">จองอีกครั้ง</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('selectRoomname').addEventListener('change', function () {
+            var selectedRoomname = this.value; // รับค่าที่ผู้ใช้เลือก
+
+            var table = document.querySelector('.table tbody');
+            var rows = table.querySelectorAll('tr');
+
+            if (selectedRoomname) {
+                // ถ้ามีค่าที่ถูกเลือก
+                Array.from(rows).forEach(function (row) {
+                    // วนลูปผ่านแต่ละแถวในตาราง
+                    var roomNameCell = row.cells[0];
+                    if (roomNameCell.textContent.trim() === selectedRoomname) {
+                        // ตรวจสอบว่าชื่อห้องในแถวตรงกับค่าที่ผู้ใช้เลือก
+                        row.style.display = 'table-row'; // แสดงแถว
+                    } else {
+                        row.style.display = 'none'; // ซ่อนแถว
+                    }
+                });
+            } else {
+                // ถ้าไม่มีค่าที่ถูกเลือก
+                Array.from(rows).forEach(function (row) {
+                    row.style.display = 'table-row'; // แสดงทุกแถว
+                });
+            }
+        });
+    </script>
+    
+
+
+    <%- include("_footer"); -%>

@@ -1,0 +1,146 @@
+<%- include("_header"); -%>
+<br>
+<br>
+<style>
+     body {
+        background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+        background-size: cover;
+    }
+
+    .city {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+        border: 2px solid #fff;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 15px; /* เพิ่มกรอบรอบรายละเอียด */
+    }
+</style>
+<body>
+    <div class="city">
+    <h1 align="center">Edit</h1>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-12 d-flex justify-content-center">
+                <form method="post" action="/editlocation_rs/<%= data.id %>" enctype="multipart/form-data" class="w-50" onsubmit="return checkFileUpload();">
+
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" Name="name" value="<%= data.name %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="typename">ประเภทของสถานที่:</label>
+                        <select class="form-control" id="typename" name="typeid">
+                            <option value="">กรุณาเลือก</option>
+                            <% if(data1) { %>
+                                <% for(var i=0; i<data1.length; i++) { %>
+                                    <option value="<%= data1[i].id %>"<% if (data1[i].id === data.typeid) { %> selected<% } %>>
+                                        <%= data1[i].typename %>
+                                    </option>
+                                <% } %>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                        <label for="currentImage">รูปภาพปัจจุบัน:</label>
+                        <input type="radio" name="imageOption" value="current" id="currentImageOption">
+                        <label for="currentImageOption">ใช้รูปภาพปัจจุบัน</label>
+                        <input type="radio" name="imageOption" value="new" id="newImageOption">
+                        <label for="newImageOption2">อัพโหลดรูปภาพใหม่</label>
+                        <input type="hidden" name="currentImage" value="<%= data.img_lo %>">
+                        <img id="currentImage" src="/name/<%= data.img_lo %>" alt="Current Image" style="max-width: 50%;">
+                    </div>
+                    
+                    <div class="form-group" id="uploadImageGroup" style="text-align: center; display: none;">
+                        <label for="filename">อัพโหลดรูปภาพ</label>
+                        <input type="file" name="filename" accept="image/*" multiple onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                        <img id="blah" style="max-width: 50%; height: auto; display: block; margin-top: 10px;">
+                    </div>
+                    
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const newImageOption = document.getElementById("newImageOption");
+                            const currentImageOption = document.getElementById("currentImageOption");
+                            const uploadImageGroup = document.getElementById("uploadImageGroup");
+                    
+                            newImageOption.addEventListener("change", function () {
+                                if (newImageOption.checked) {
+                                    uploadImageGroup.style.display = "block";
+                                } else {
+                                    uploadImageGroup.style.display = "none";
+                                }
+                            });
+                    
+                            currentImageOption.addEventListener("change", function () {
+                                if (currentImageOption.checked) {
+                                    uploadImageGroup.style.display = "none";
+                                }
+                            });
+                    
+                            // Check the initial value
+                            if (currentImageOption.checked) {
+                                uploadImageGroup.style.display = "none";
+                            }
+                        });
+                    
+                        // ใส่ฟังก์ชันเพิ่มเพื่อตรวจสอบการอัพโหลดรูปภาพใหม่
+                        function checkFileUpload() {
+        const uploadInput = document.querySelector('input[type="file"]');
+        if (newImageOption.checked && !uploadInput.files.length) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'ข้อผิดพลาด',
+                text: 'กรุณาเลือกภาพอัพโหลด',
+            });
+            return false; // หยุดการส่งแบบฟอร์มถ้าไม่เลือกภาพ
+        }
+
+        const currentImageOptionChecked = currentImageOption.checked;
+        const newImageOptionChecked = newImageOption.checked;
+
+        if (!currentImageOptionChecked && !newImageOptionChecked) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'ข้อผิดพลาด',
+                text: 'กรุณาเลือกตัวเลือก',
+            });
+            return false; // หยุดการส่งแบบฟอร์มถ้าไม่เลือกตัวเลือก
+        }
+
+        return true; // ดำเนินการส่งแบบฟอรมหากเลือกภาพหรือตัวเลือก
+    }
+                    </script>
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                   
+                    
+                
+                    
+
+                    <div class="form-group">
+                        <label for="location">รายละเอียด</label>
+                        <input type="text" class="form-control" id="location" Name="location" value="<%= data.location %>" required>
+                    </div>
+
+                    <br>
+                    <button type="submit" class="btn btn-info">บันทึก</button>
+                    <a href="/location_rs/list" class="btn btn-danger">ย้อนกลับ</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <%- include("_footer"); -%>

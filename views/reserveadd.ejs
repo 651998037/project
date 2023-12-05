@@ -1,0 +1,308 @@
+<%- include("_header"); -%>
+    <br>
+    <br>
+    <style>
+        body {
+            background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+            background-size: cover;
+        }
+
+        .city {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+            border: 2px solid #fff;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            /* เพิ่มกรอบรอบรายละเอียด */
+
+
+        }
+    </style>
+
+    <div id="alert">
+        <p id="alertMessage" class="alert-message"></p>
+    </div>
+
+    <div class="city">
+
+
+        <div id="alert">
+            <h1 align="center">จองห้องประชุม</h1>
+
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <form action="/reserve/add" enctype="multipart/form-data" method="post"
+                            onsubmit="return validateForm()">
+
+                            <!-- แถวที่ 1 -->
+
+
+                            <div class="form-group">
+                                <label for="roomname">ชื่อห้อง</label>
+                                <select class="form-control" name="roomname" id="roomnameSelect">
+                                    <option value="">กรุณาเลือกห้อง</option>
+                                    <% if(data1 && data1.length> 0){ %>
+                                        <% for(var i=0; i < data1.length; i++){ %>
+                                            <option value="<%= data1[i].id %>">
+                                                <%= data1[i].name %>
+                                            </option>
+
+                                            <% } %>
+                                                <% } %>
+                                </select>
+                            </div>
+
+                            <div id="notification" style="display: none;">
+                                <p id="notificationMessage" class="alert-message"></p>
+                            </div>
+
+
+
+
+
+                            <div class="form-group">
+                                <label for="name">ชื่อผู้จอง</label>
+                                <input type="text" Name="name" placeholder="ชื่อ" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">เบอร์โทร</label>
+                                <input type="text" Name="phone" placeholder="เบอร์โทร" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="usedfor">จำนวนคนที่มาประชุม</label>
+                                <input type="text" Name="usedfor" placeholder="จำนวนคนที่มาประชุม" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="position">ตำแหน่ง</label>
+                                <input type="text" Name="position" placeholder="ตำแหน่ง" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="affiliation">สังกัด</label>
+                                <input type="text" Name="affiliation" placeholder="สังกัด/งาน/ฝ่าน"
+                                    class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="group_name">คณะ</label>
+                                <input type="text" Name="group_name" placeholder="คณะ/สำนัก/สถาบัน"
+                                    class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="to_name">เพื่อ</label>
+                                <input type="text" Name="to_name" placeholder="อธิบาย" class="form-control">
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+                                <label for="startdatetime">วันที่เริ่ม</label>
+                                <input type="datetime-local" name="startdatetime" id="startdatetime"
+                                    class="form-control" onchange="A1()">
+                                <!-- <span id="startDatetimeError" class="error"></span> -->
+                                <!-- เพิ่มส่วนแสดงข้อความแจ้งเตือน -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="enddatetime">วันที่สิ้นสุด</label>
+                                <input type="datetime-local" name="enddatetime" id="enddatetime" class="form-control"
+                                    onchange="A1()">
+                                <!-- <span id="endDatetimeError" class="error"></span> -->
+                                <!-- เพิ่มส่วนแสดงข้อความแจ้งเตือน -->
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+                                <label for="equipment">อุปกรณ์ที่ขอยืม</label>
+                                <input type="text" Name="equipment" placeholder="หากไม่ยืมกดบันทึกได้เลย"
+                                    class="form-control">
+                            </div>
+
+                            <br>
+                            <button type="submit" class="btn btn-primary">บันทึก</button>
+                            <a href="/location_rs/list" class="btn btn-primary">ย้อนกลับ</a>
+                        </form>
+                        <!-- <script>
+                function validateForm() {
+                    var roomnameSelect = document.getElementById("roomnameSelect");
+                    if (roomnameSelect.value === "") {
+                        alert("กรุณาเลือกประเภทของสถานที่");
+                        return false;
+                    }
+                    return true;
+                }
+            </script> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    </script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ 
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables').DataTable();
+        });
+
+        function A1() {
+            const startDatetime = document.getElementById("startdatetime").value;
+            const roomSelect = document.getElementById("roomnameSelect").value;
+
+            // เช็คว่ามีการเลือกห้องหรือไม่
+            if (!roomSelect) {
+                Swal.fire({
+                    title: "กรุณาเลือกห้อง",
+                    icon: "error",
+                    confirmButtonText: "ตกลง",
+                }).then((result) => {
+                    // เมื่อผู้ใช้คลิก OK ในหน้าต่างแจ้งเตือน
+                    if (result.isConfirmed) {
+                        // ล้างค่าในช่องเลือกห้องเพื่อให้ผู้ใช้กรอกใหม่
+                        document.getElementById("roomnameSelect").value = "";
+                    }
+                });
+                return; // ออกจากฟังก์ชันถ้าไม่มีห้องที่เลือก
+            }
+
+            const endDatetime = document.getElementById("enddatetime").value;
+
+            if (!endDatetime) {
+                // ทำ AJAX request เพื่อตรวจสอบว่าเวลาว่างหรือไม่ สำหรับห้องที่เลือก
+                $.ajax({
+                    url: '/reserve/E',
+                    type: 'POST',
+                    data: {
+                        hamham1: startDatetime,
+                        hamham2: endDatetime,
+                        id: roomSelect
+                    },
+                    success: (data) => {
+                        console.log("AJAX response data:", data);
+
+                        if (data.hamham === "1") {
+                            Swal.fire({
+                                title: "ห้องนี้มีการจองแล้ว",
+                                text: "กรุณาจองใหม่อีกครั้ง",
+                                icon: "error",
+                                confirmButtonText: "ตกลง",
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById("startdatetime").value = "";
+                                    document.getElementById("enddatetime").value = "";
+                                }
+                            });
+                        } else if (data.hamham === "5") {
+                            if (data.availableTimes && data.availableTimes.length > 0) {
+                                const availableTimes = data.availableTimes;
+                                const availableTimesText = availableTimes.join(", ");
+                                const text123 = `เวลาที่ว่างสำหรับห้อง ${roomSelect} ในวันที่ ${startDatetime} คือ: ${availableTimesText}`;
+                                console.log(text123);
+                                Swal.fire({
+                                    title: "เวลาที่ว่าง",
+                                    text: text123,
+                                    icon: "info",
+                                    confirmButtonText: "ตกลง",
+                                });
+                            }
+                        }
+
+                    },
+                    error: (error) => {
+                        console.error("Error fetching available times:", error);
+                    },
+                });
+            }
+        }
+
+
+    </script>
+
+
+    <script>
+        // เลือกข้อมูลองค์ประกอบ HTML
+        const startDatetime = document.getElementById("startdatetime");
+        const endDatetime = document.getElementById("enddatetime");
+
+        const startDatetimeError = document.getElementById("startDatetimeError");
+        const endDatetimeError = document.getElementById("endDatetimeError");
+
+        // console.log(startDatetimeError, '\n', endDatetimeError);
+        // // เพิ่มฟังก์ชันตรวจสอบค่าซ้ำ
+        function checkDuplicateDatetime() {
+            if (startDatetime.value === endDatetime.value) {
+                Swal.fire({
+                    title: "ไม่สามารถจองได้",
+                    text: "วันเวลาเริ่มและสิ้นสุดต้องไม่ซ้ำกัน",
+                    icon: "error",
+                    confirmButtonText: "ตกลง",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // ล้างค่าเวลาเริ่มและเวลาสิ้นสุด
+                        startDatetime.value = "";
+                        endDatetime.value = "";
+                    }
+                });
+            }
+        }
+
+        // ตรวจสอบค่าซ้ำเมื่อเปลี่ยนข้อมูล
+        startDatetime.addEventListener("change", checkDuplicateDatetime);
+        endDatetime.addEventListener("change", checkDuplicateDatetime);
+
+        // เพิ่มฟังก์ชันตรวจสอบค่าซ้ำเมื่อยื่นแบบฟอร์ม
+        function validateForm() {
+            const roomnameSelect = document.getElementById("roomnameSelect");
+            if (roomnameSelect.value === "") {
+                alert("กรุณาเลือกประเภทของสถานที่");
+                return false;
+            }
+
+            if (startDatetime.value === endDatetime.value) {
+                startDatetimeError.innerHTML = "วันเวลาเริ่มและสิ้นสุดต้องไม่ซ้ำกัน";
+                endDatetimeError.innerHTML = "วันเวลาเริ่มและสิ้นสุดต้องไม่ซ้ำกัน";
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+    <!-- <script>
+        function checkDuplicateReservation() {
+            const roomname = document.getElementById("roomnameSelect").value;
+            const startDatetime = new Date(document.getElementById("startdatetime").value);
+            const endDatetime = new Date(document.getElementById("enddatetime").value);
+
+            // เรียกฟังก์ชัน checkIfReservationIsDuplicate เพื่อตรวจสอบการจองที่ซ้ำกัน
+            const isDuplicate = checkIfReservationIsDuplicate(roomname, startDatetime, endDatetime);
+
+            if (isDuplicate) {
+                const notificationMessage = document.getElementById("notificationMessage");
+                notificationMessage.textContent = "ชื่อห้องและเวลาที่คุณเลือกมีการจองแล้ว กรุณาเลือกวันที่หรือเวลาอื่น ๆ หรือห้องอื่น ๆ.";
+
+                const notificationDiv = document.getElementById("notification");
+                notificationDiv.style.display = "block"; // แสดงการแจ้งเตือน
+
+                return false; // ยกเลิกการยื่นแบบฟอร์ม
+            }
+
+            return true; // อนุญาตให้ยื่นแบบฟอร์ม
+        }
+    </script> -->
+
+    <%- include("_footer"); -%>

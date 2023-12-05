@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+<style>
+    /* body {
+        background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+        background-size: cover;
+    } */
+
+    .city {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+        border: 2px solid #fff;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: left;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    /* เพิ่ม Flexbox เพื่อจัดเนื้อหาอยู่ตรงกลางแนวตั้ง */
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* เพิ่ม Flexbox เพื่อจัดปุ่ม "ย้อนกลับ" อยู่ตรงกลาง */
+    .back-button {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* ปรับระยะห่างของบรรทัด */
+    p {
+        margin-top: 1cm; /* ขยับลงมา 2 เซนติเมตร */
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    a.btn:hover {
+        background-color: #b37700;
+        color: #fff;
+        transition: background-color 0.3s;
+    }
+
+    .underlined {
+        border: none;
+        border-bottom: 1px solid #000; /* You can adjust the color and thickness as needed */
+        background-color: transparent;
+    }
+
+    .city p {
+        text-align: left; /* ตำแหน่งข้อความด้านซ้ายใน <p> elements */
+    }
+
+    .underlined {
+        border: none;
+        border-bottom: 1px solid #000; /* ความหนาของขอบข้อความใต้เส้นที่เป็นขีดใต้ */
+        background-color: transparent;
+    }
+
+    .input-container {
+        text-align: center;
+    }
+
+    input {
+        text-align: center;
+    }
+
+    p {
+        font-size: 13px;
+    }
+
+    /* Hide elements with class 'no-print' when printing */
+    .no-print {
+        display: none;
+    }
+
+    @page {
+            size: A4;
+            margin: 0;
+        }
+</style>
+
+<div class="city">
+    <h3>แบบฟอร์มขอใช้ห้องประชุม</h3>
+    <h3>เทศบาลตำบลเวียงเทิง อำเภทเทิง จังหวัดเชียงราย</h3>
+    <p>ข้าพเจ้า <input Name="name" value="<%=data.name %>" class="underlined"> ตำแหน่ง <input Name="position" value="<%= data.position %>" class="underlined"> สังกัด/งาน/ฝ่าย <input Name="affiliation" value="<%= data.affiliation %>" class="underlined"></p>
+    <p>คณะ/สำนัก/สถาบัน <input Name="group_name" value="<%= data.group_name %>" class="underlined"> โทร <input Name="phone " value="<%= data.phone %>" class="underlined"> </p>
+    <p>มีความสประสงค์จะขอใช้ห้องประชุม  <input Name="roomname" value="<%= data.roomname %>" class="underlined"> </p>
+    <p>วันที่<u><input name="startdatetime" value="<%= data.startdatetime.getDate() %>" id="startdatetime" class="underlined"></u> 
+        เดือน <u> <input name="startdatetime" value="<%= data.startdatetime.getMonth() + 1 %>" id="s_month" class="underlined" ></u>
+
+        พ.ศ. <u> <input value="<%= data.startdatetime.getFullYear() %>" class="underlined"> </u>
+
+        ตั้งแต่เวลา <input name="startdatetime" value="<%= data.startdatetime.toLocaleTimeString().slice(0, 5) %>" id="startdatetime" class="underlined"> น. ถึงเวลา  <input name="enddatetime" value="<%= data.enddatetime.toLocaleTimeString().slice(0, 5) %>" id="enddatetime" class="underlined"> น.</p>
+    <p>เพื่อ <input Name="to_name" value="<%= data.to_name %>" class="underlined"></p>
+    <p>โดยมีผู้เข้าร่วมประชุมทั้งสิ้นจำนวน <input Name="usedfor" value="<%= data.usedfor %>" class="underlined"> คน</p>
+    <p>พร้อมอุปกรณ์/เจ้าหน้าที่ที่ขอใช้ในการประชุม ดังรายการต่อไปนี้</p>
+    <p>อื่นๆ ระบุ <input Name="equipment" value="<%= data.equipment %>" class="underlined"></p>
+    <p>ในรายการใช้บริการครั้งนี้ ข้าพเจ้าฯ รับทราบและยินดีปฎิบัติตามเงื่อนไขในการขอใช้ห้องประชุมของเทศบาลตำบล เวียงเทิง อำเภทเทิง จังหวัดเชียงราย</p>
+    <p style="text-align: right;">(ลงชื่อ) <u><input class="underlined"></u></p>
+    <p style="text-align: right;">(<u><input class="underlined"></u>)</p>
+</div>
+
+<script>
+    const set_mouth = document.getElementById('s_month');
+    console.log(set_mouth);
+    if(set_mouth.value == 1){
+        set_mouth.value = 'มกราคม'
+    }
+    if(set_mouth.value == 2){
+        set_mouth.value = 'กุมภาพันธ์'
+    }
+    if(set_mouth.value == 3){
+        set_mouth.value = 'มีนาคม '
+    }
+    if(set_mouth.value == 4){
+        set_mouth.value = 'เมษายน '
+    }
+    if(set_mouth.value == 5){
+        set_mouth.value = 'พฤษภาคม'
+    }
+    if(set_mouth.value == 6){
+        set_mouth.value = 'มิถุนายน'
+    }
+    if(set_mouth.value == 7){
+        set_mouth.value = 'กรกฎาคม'
+    }
+    if(set_mouth.value == 8){
+        set_mouth.value = 'สิงหาคม'
+    }
+    
+    if(set_mouth.value == 9){
+        set_mouth.value = 'กันยายน '
+    }
+    if(set_mouth.value == 10){
+        set_mouth.value = 'ตุลาคม'
+    }
+    if(set_mouth.value == 11){
+        set_mouth.value = 'พฤศจิกายน '
+    }
+    if(set_mouth.value == 12){
+        set_mouth.value = 'ธันวาคม  '
+    }
+
+
+
+    window.print();
+
+</script>
+</head>

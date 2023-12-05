@@ -1,0 +1,71 @@
+<%- include("_header"); -%>
+<br>
+<br>
+<style>
+    body {
+       background: url('https://cdn.discordapp.com/attachments/1093803444130811906/1150013094769209466/1.jpg') no-repeat;
+       background-size: cover;
+   }
+
+   .city {
+       background-color: rgba(255, 255, 255, 0.8);
+       color: #000;
+       border: 2px solid #fff;
+       margin: 20px;
+       padding: 20px;
+       border-radius: 15px; /* เพิ่มกรอบรอบรายละเอียด */
+   }
+</style>
+<body>
+   <div class="city">
+<h1 align="center">เพิ่มสถานที่</h1>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12 d-flex justify-content-center">
+            <form action="/location_rs/add" enctype="multipart/form-data" method="post" class="w-50">
+                <!-- แถวที่ 1 -->
+
+                <div class="form-group">
+                    <label for="name">ชื่อพื้นที่กิจกรรม</label>
+                    <input type="text" Name="name" placeholder="ชื่อพื้นที่กิจกรรม" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="typeid">ประเภทของสถานที่</label>
+                    <select class="form-control" Name="typeid">
+                        <option> กรุณาเลือก </option>
+                        <% if(data1){ %>
+                            <% for(var i=0;i<data1.length;i++){ %>
+                                <option value="<%= data1[i].id %>"> <%= data1[i].typename %> </option>
+                            <% } %>
+                        <% } %>        
+                    </select>
+                </div>
+
+
+
+                <div class="form-group" style="text-align: center;">
+                    <label for="image">อัพโหลดรูปภาพ</label>
+                    <input type="file" name="filename" accept="image/*" multiple onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                    <img id="blah"style="max-width: 50%; height: auto; display: block; margin-top: 10px;">
+                </div>
+                
+
+                
+
+                <!-- แถวที่ 3 - เพิ่มส่วนอัพโหลดไฟล์ -->
+                <div class="form-group">
+                    <label for="location">รายละเอียด</label>
+                    <input type="text" Name="location" placeholder="รายละเอียด" class="form-control">
+                </div>
+
+                <br>
+                <button type="submit" class="btn btn-primary">บันทึก</button>
+                <a href="/location_rs/list" class="btn btn-primary">ย้อนกลับ</a>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<%- include("_footer"); -%>
